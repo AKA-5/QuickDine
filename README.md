@@ -55,9 +55,10 @@ QuickDine AI integrates **Gemini 2.5 Flash** via Google's Generative AI SDK insi
 - **Chat Assistant**: Connects diner conversations to Gemini's chat mode, contextualizing responses with the user's taste quiz and available restaurant properties.
 
 ## Live Demo
-- **Vercel Deploy**: *[Provide public URL here during Vercel deployment]*
+- **Vercel Deploy**: [quickdine-one.vercel.app](https://quickdine-one.vercel.app)
 
 ## Author
 - **Muhammad Kaleem Akhtar**
-- **GitHub**: [github.com/kaleem-akhtar](https://github.com/kaleem-akhtar)
-- **LinkedIn**: [linkedin.com/in/kaleem-akhtar](https://linkedin.com/in/kaleem-akhtar)
+- **GitHub**: [github.com/AKA-5](https://github.com/AKA-5)
+- **LinkedIn**: [linkedin.com/in/kaleemakhtar-pm](https://www.linkedin.com/in/kaleemakhtar-pm)
+
