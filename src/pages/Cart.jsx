@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
 import { useAuth } from '../hooks/useAuth';
 import { useFirestore } from '../hooks/useFirestore';
 import { Navbar } from '../components/layout/Navbar';
-import { getUnsplashUrl } from '../utils/imageHelper';
 import { MOCK_RESTAURANTS } from '../services/mockData';
 
 export default function Cart() {
@@ -45,7 +44,7 @@ export default function Cart() {
       }
     }
     loadRestaurant();
-  }, [cart.restaurantId]);
+  }, [cart.restaurantId, getRestaurant]);
 
   if (cart.items.length === 0) {
     return (

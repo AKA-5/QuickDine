@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useFirestore } from '../hooks/useFirestore';
 import { useCart } from '../hooks/useCart';
@@ -49,7 +49,7 @@ export default function RestaurantDetail() {
     }
 
     loadRestaurantAndMenu();
-  }, [id]);
+  }, [id, getRestaurant, getMenu]);
 
   if (loading) {
     return (
@@ -178,7 +178,6 @@ export default function RestaurantDetail() {
                     <MenuItemCard
                       key={item.id}
                       item={item}
-                      restaurantId={restaurant.id}
                       onAdd={handleAdd}
                       countInCart={getCountInCart(item.id)}
                     />

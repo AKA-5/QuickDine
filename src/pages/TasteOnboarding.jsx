@@ -219,7 +219,7 @@ export default function TasteOnboarding() {
                   className="w-full accent-accent bg-border h-2 rounded-lg appearance-none cursor-pointer"
                 />
                 <div className="flex justify-between text-xs uppercase tracking-wider font-semibold text-text-secondary">
-                  {currentQ.options.map((option, idx) => {
+                  {currentQ.options.map((option) => {
                     const isSelected = answers.spiceLevel === option;
                     return (
                       <span 

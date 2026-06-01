@@ -15,7 +15,7 @@ vi.mock('../../hooks/useAuth', () => ({
 }));
 
 describe('Cart Page', () => {
-  it('renders cart items and updates price total when modifying quantities', () => {
+  it('renders cart items and updates price total when modifying quantities', async () => {
     const mockUpdateCartItemQty = vi.fn();
     const mockUpdateCartItemInstructions = vi.fn();
     const mockClearCart = vi.fn();
@@ -48,6 +48,9 @@ describe('Cart Page', () => {
         </AppContext.Provider>
       </MemoryRouter>
     );
+
+    // Wait for async restaurant loading to complete to prevent act(...) warnings
+    expect(await screen.findByText('Items from Savour Foods')).toBeInTheDocument();
 
     // Verify item renders
     expect(screen.getByText('Peshawari Karahi')).toBeInTheDocument();

@@ -1,8 +1,7 @@
-import React from 'react';
 import { getUnsplashUrl } from '../../utils/imageHelper';
 
-export function MenuItemCard({ item, restaurantId, onAdd, countInCart }) {
-  const { id, name, price, description, spiceLevel } = item;
+export function MenuItemCard({ item, onAdd, countInCart }) {
+  const { name, price, description, spiceLevel } = item;
 
   const getSpiceBadgeStyle = (spice) => {
     switch (spice?.toLowerCase()) {
