@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { getUnsplashUrl } from '../../utils/imageHelper';
 
 export function MenuItemCard({ item, onAdd, onRemove, countInCart }) {
+  const [imgError, setImgError] = useState(false);
   const { name, price, description, spiceLevel } = item;
 
   const getSpiceBadgeStyle = (spice) => {
@@ -46,13 +48,20 @@ export function MenuItemCard({ item, onAdd, onRemove, countInCart }) {
 
       {/* Right Image & Actions */}
       <div className="flex flex-col items-center space-y-2 shrink-0">
-        <div className="w-20 h-20 rounded-md overflow-hidden bg-bg border border-border">
-          <img
-            src={getUnsplashUrl(200, 200, name + ' food')}
-            alt={`${name} dish`}
-            className="object-cover w-full h-full"
-            loading="lazy"
-          />
+        <div className="w-20 h-20 rounded-md overflow-hidden bg-bg border border-border flex items-center justify-center">
+          {imgError ? (
+            <div className="w-full h-full bg-accent-light text-accent flex items-center justify-center">
+              <span className="material-symbols-outlined text-2xl select-none">restaurant</span>
+            </div>
+          ) : (
+            <img
+              src={getUnsplashUrl(200, 200, name + ' food')}
+              alt={`${name} dish`}
+              className="object-cover w-full h-full"
+              onError={() => setImgError(true)}
+              loading="lazy"
+            />
+          )}
         </div>
 
         {countInCart > 0 ? (

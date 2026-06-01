@@ -16,6 +16,7 @@ export default function RestaurantDetail() {
   const [restaurant, setRestaurant] = useState(null);
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imgError, setImgError] = useState(false);
 
   // Fetch restaurant and menu items
   useEffect(() => {
@@ -103,12 +104,20 @@ export default function RestaurantDetail() {
       <Navbar />
 
       {/* Hero Banner Header */}
-      <div className="relative h-64 md:h-80 w-full overflow-hidden bg-black">
-        <img
-          src={getUnsplashUrl(1200, 400, restaurant.cuisine + ' restaurant')}
-          alt={`${restaurant.name} banner`}
-          className="object-cover w-full h-full opacity-60"
-        />
+      <div className="relative h-64 md:h-80 w-full overflow-hidden bg-black flex items-center justify-center">
+        {imgError ? (
+          <div className="w-full h-full bg-accent flex flex-col items-center justify-center space-y-1">
+            <span className="material-symbols-outlined text-5xl text-white/40 select-none">restaurant</span>
+            <span className="text-xs uppercase tracking-widest font-semibold text-white/60">{restaurant.cuisine} Cuisine</span>
+          </div>
+        ) : (
+          <img
+            src={getUnsplashUrl(1200, 400, restaurant.cuisine + ' restaurant')}
+            alt={`${restaurant.name} banner`}
+            className="object-cover w-full h-full opacity-60"
+            onError={() => setImgError(true)}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         
         {/* Info overlay */}

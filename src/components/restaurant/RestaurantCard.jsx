@@ -5,6 +5,7 @@ import { getUnsplashUrl } from '../../utils/imageHelper';
 export function RestaurantCard({ restaurant }) {
   const navigate = useNavigate();
   const { id, name, cuisine, location, rating, priceRange, avgWaitMinutes } = restaurant;
+  const [imgError, setImgError] = React.useState(false);
 
   const handlePreOrder = () => {
     navigate(`/restaurant/${id}`);
@@ -12,13 +13,21 @@ export function RestaurantCard({ restaurant }) {
 
   return (
     <div className="bg-white rounded-lg border border-border shadow-card overflow-hidden flex flex-col justify-between group h-full">
-      <div className="relative aspect-[16/10] overflow-hidden bg-bg">
-        <img
-          src={getUnsplashUrl(400, 250, cuisine + ' restaurant')}
-          alt={`${name} restaurant exterior`}
-          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-          loading="lazy"
-        />
+      <div className="relative aspect-[16/10] overflow-hidden bg-bg flex items-center justify-center">
+        {imgError ? (
+          <div className="w-full h-full bg-accent-light text-accent flex flex-col items-center justify-center space-y-1">
+            <span className="material-symbols-outlined text-4xl select-none">restaurant</span>
+            <span className="text-[10px] uppercase tracking-widest font-semibold">{cuisine}</span>
+          </div>
+        ) : (
+          <img
+            src={getUnsplashUrl(400, 250, cuisine + ' restaurant')}
+            alt={`${name} restaurant exterior`}
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+            onError={() => setImgError(true)}
+            loading="lazy"
+          />
+        )}
         <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-[4px] border border-border flex items-center space-x-1">
           <span className="material-symbols-outlined text-warning text-sm select-none">star</span>
           <span className="text-xs font-semibold text-text-primary">{rating.toFixed(1)}</span>
