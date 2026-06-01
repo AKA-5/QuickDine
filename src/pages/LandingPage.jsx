@@ -10,6 +10,7 @@ export default function LandingPage() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,7 +71,7 @@ export default function LandingPage() {
         <span className="font-serif text-3xl font-bold tracking-tight text-accent">QuickDine</span>
         <button
           onClick={() => setShowLoginModal(true)}
-          className="text-xs uppercase tracking-widest font-semibold border border-border bg-white text-text-primary rounded-[6px] px-4 py-2 hover:bg-bg transition-colors"
+          className="text-xs uppercase tracking-widest font-semibold border border-accent/40 bg-white text-accent rounded-[6px] px-4 py-2 hover:bg-accent hover:text-white transition-colors shadow-sm cursor-pointer"
         >
           Staff Sign In
         </button>
@@ -96,7 +97,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
             <button
               onClick={handleCustomerLogin}
-              className="bg-accent text-white rounded-[6px] px-8 py-3.5 text-sm font-semibold hover:bg-[#B03D24] transition-colors shadow-sm flex items-center justify-center space-x-2"
+              className="bg-accent text-white rounded-[6px] px-8 py-3.5 text-sm font-semibold hover:bg-[#B03D24] transition-all hover:scale-[1.01] shadow-md flex items-center justify-center space-x-2 cursor-pointer"
             >
               <span className="material-symbols-outlined text-lg">login</span>
               <span>Dine as Customer</span>
@@ -106,7 +107,7 @@ export default function LandingPage() {
                 setShowLoginModal(true);
                 fillDemoCreds('customer');
               }}
-              className="border border-border text-text-primary bg-white rounded-[6px] px-8 py-3.5 text-sm font-semibold hover:bg-bg transition-colors flex items-center justify-center space-x-2"
+              className="border border-accent/40 text-accent bg-white rounded-[6px] px-8 py-3.5 text-sm font-semibold hover:bg-accent-light transition-all hover:scale-[1.01] flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
             >
               <span>Dine with Demo Account</span>
             </button>
@@ -236,28 +237,39 @@ export default function LandingPage() {
                 <label className="text-xs uppercase tracking-widest font-medium text-text-secondary block">
                   Password
                 </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="w-full border border-border rounded-[6px] bg-white px-3 py-2 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
-                />
+                <div className="relative flex items-center">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    className="w-full border border-border rounded-[6px] bg-white pl-3 pr-10 py-2 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => !prev)}
+                    className="absolute right-3 text-text-secondary hover:text-text-primary focus:outline-none select-none cursor-pointer flex items-center justify-center"
+                  >
+                    <span className="material-symbols-outlined text-lg">
+                      {showPassword ? 'visibility' : 'visibility_off'}
+                    </span>
+                  </button>
+                </div>
               </div>
 
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => fillDemoCreds('restaurant')}
-                  className="flex-1 text-center py-1.5 text-xs font-semibold rounded-[6px] border border-border hover:bg-bg text-text-secondary transition-colors"
+                  className="flex-1 text-center py-2 text-xs font-semibold rounded-[6px] border border-border bg-white hover:border-accent hover:text-accent text-text-secondary transition-all cursor-pointer shadow-sm"
                 >
                   Demo Restaurant
                 </button>
                 <button
                   type="button"
                   onClick={() => fillDemoCreds('customer')}
-                  className="flex-1 text-center py-1.5 text-xs font-semibold rounded-[6px] border border-border hover:bg-bg text-text-secondary transition-colors"
+                  className="flex-1 text-center py-2 text-xs font-semibold rounded-[6px] border border-border bg-white hover:border-accent hover:text-accent text-text-secondary transition-all cursor-pointer shadow-sm"
                 >
                   Demo Customer
                 </button>
@@ -266,7 +278,7 @@ export default function LandingPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-accent text-white rounded-[6px] py-2.5 text-sm font-semibold hover:bg-[#B03D24] transition-colors disabled:opacity-50"
+                className="w-full bg-accent text-white rounded-[6px] py-2.5 text-sm font-semibold hover:bg-[#B03D24] transition-colors disabled:opacity-50 cursor-pointer shadow-md"
               >
                 {isSubmitting ? 'Signing in...' : 'Sign In'}
               </button>
