@@ -1,6 +1,6 @@
 import { getUnsplashUrl } from '../../utils/imageHelper';
 
-export function MenuItemCard({ item, onAdd, countInCart }) {
+export function MenuItemCard({ item, onAdd, onRemove, countInCart }) {
   const { name, price, description, spiceLevel } = item;
 
   const getSpiceBadgeStyle = (spice) => {
@@ -45,7 +45,7 @@ export function MenuItemCard({ item, onAdd, countInCart }) {
       </div>
 
       {/* Right Image & Actions */}
-      <div className="flex flex-col items-center space-y-3 relative shrink-0">
+      <div className="flex flex-col items-center space-y-2 shrink-0">
         <div className="w-20 h-20 rounded-md overflow-hidden bg-bg border border-border">
           <img
             src={getUnsplashUrl(200, 200, name + ' food')}
@@ -55,18 +55,37 @@ export function MenuItemCard({ item, onAdd, countInCart }) {
           />
         </div>
 
-        <button
-          onClick={() => onAdd(item)}
-          className="absolute -bottom-2 bg-accent hover:bg-[#B03D24] text-white rounded-full h-7 px-3 text-xs font-semibold shadow-sm flex items-center justify-center space-x-0.5 hover:scale-105 transition-all"
-        >
-          <span className="material-symbols-outlined text-sm select-none">add</span>
-          <span>Add</span>
-          {countInCart > 0 && (
-            <span className="ml-1 bg-white/20 text-white rounded-full px-1 text-[10px]">
+        {countInCart > 0 ? (
+          <div className="flex items-center border border-accent rounded-full overflow-hidden bg-white h-7 shrink-0">
+            <button
+              onClick={() => onRemove(item)}
+              className="px-2.5 h-full hover:bg-accent-light text-accent transition-colors flex items-center justify-center cursor-pointer select-none"
+              title="Remove one"
+            >
+              <span className="material-symbols-outlined text-[14px] font-bold">remove</span>
+            </button>
+            
+            <span className="px-2 text-xs font-bold text-text-primary min-w-[20px] text-center select-none">
               {countInCart}
             </span>
-          )}
-        </button>
+            
+            <button
+              onClick={() => onAdd(item)}
+              className="px-2.5 h-full hover:bg-accent-light text-accent transition-colors flex items-center justify-center cursor-pointer select-none"
+              title="Add one"
+            >
+              <span className="material-symbols-outlined text-[14px] font-bold">add</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => onAdd(item)}
+            className="bg-accent hover:bg-[#B03D24] text-white rounded-full h-7 px-3 text-xs font-semibold shadow-sm flex items-center justify-center space-x-0.5 hover:scale-105 transition-all cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-sm select-none">add</span>
+            <span>Add</span>
+          </button>
+        )}
       </div>
 
     </div>

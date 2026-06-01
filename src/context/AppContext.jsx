@@ -35,17 +35,34 @@ export function AppProvider({ children }) {
         
         let profileData = {};
         if (!userDocSnap.exists()) {
-          // New user (likely Google sign-in)
-          profileData = {
-            uid: firebaseUser.uid,
-            email: firebaseUser.email,
-            displayName: firebaseUser.displayName,
-            role: 'customer',
-            tasteProfile: null
-          };
+          // New user (likely Google sign-in or first-time email login)
+          if (firebaseUser.email === 'restaurant@quickdine.demo') {
+            profileData = {
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: 'Savour Foods (Demo)',
+              role: 'restaurant',
+              restaurantId: 'r1'
+            };
+          } else {
+            profileData = {
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName || 'Diner',
+              role: 'customer',
+              tasteProfile: null
+            };
+          }
           await setDoc(userDocRef, profileData);
         } else {
           profileData = userDocSnap.data();
+          // Ensure correct role and restaurant ID for the demo restaurant user if previously misconfigured
+          if (firebaseUser.email === 'restaurant@quickdine.demo' && (profileData.role !== 'restaurant' || !profileData.restaurantId)) {
+            profileData.role = 'restaurant';
+            profileData.restaurantId = 'r1';
+            profileData.displayName = 'Savour Foods (Demo)';
+            await setDoc(userDocRef, profileData);
+          }
         }
         
         setUser({

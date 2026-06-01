@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { 
   collection, 
   doc, 
@@ -14,7 +14,7 @@ export function useFirestore() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getRestaurant = async (id) => {
+  const getRestaurant = useCallback(async (id) => {
     setLoading(true);
     setError(null);
     try {
@@ -28,9 +28,9 @@ export function useFirestore() {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
-  const getMenu = async (restaurantId) => {
+  const getMenu = useCallback(async (restaurantId) => {
     setLoading(true);
     setError(null);
     try {
@@ -45,9 +45,9 @@ export function useFirestore() {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
-  const createOrder = async (orderData) => {
+  const createOrder = useCallback(async (orderData) => {
     setLoading(true);
     setError(null);
     try {
@@ -65,9 +65,9 @@ export function useFirestore() {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
-  const updateOrderStatus = async (orderId, status) => {
+  const updateOrderStatus = useCallback(async (orderId, status) => {
     setLoading(true);
     setError(null);
     try {
@@ -83,7 +83,7 @@ export function useFirestore() {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
   return {
     loading,

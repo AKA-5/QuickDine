@@ -85,8 +85,12 @@ Available restaurants: ${JSON.stringify(restaurants.map(r => ({ id: r.id, name: 
 Be concise and friendly. No markdown formatting in your response.
   `.trim();
 
+  // Filter history to ensure it starts with a 'user' message as required by Gemini API
+  const firstUserIdx = conversationHistory.findIndex(m => m.role === 'user');
+  const cleanHistory = firstUserIdx !== -1 ? conversationHistory.slice(firstUserIdx) : [];
+
   const chat = model.startChat({
-    history: conversationHistory.map(m => ({
+    history: cleanHistory.map(m => ({
       role: m.role,
       parts: [{ text: m.text }],
     })),

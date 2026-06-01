@@ -213,14 +213,17 @@ export default function RestaurantDashboard() {
                         </div>
 
                         {/* Items list */}
-                        <div className="border-t border-border/50 pt-2 pb-1 space-y-1">
+                        <div className="border-t border-border/50 pt-2 pb-1 space-y-2">
                           {order.items?.map((item, idx) => (
-                            <div key={idx} className="text-xs text-text-primary flex justify-between">
-                              <span>
-                                <span className="font-semibold">{item.quantity}x</span> {item.name}
-                              </span>
+                            <div key={idx} className="text-xs text-text-primary space-y-0.5">
+                              <div className="flex justify-between">
+                                <span>
+                                  <span className="font-semibold text-accent">{item.quantity}x</span> {item.name}
+                                </span>
+                                <span className="text-text-secondary font-mono">PKR {(item.price * item.quantity).toLocaleString()}</span>
+                              </div>
                               {item.instructions && (
-                                <p className="text-[10px] text-accent italic mt-0.5 max-w-full">
+                                <p className="text-[10px] text-accent italic pl-4 font-sans font-medium">
                                   * {item.instructions}
                                 </p>
                               )}

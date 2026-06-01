@@ -11,7 +11,7 @@ export default function RestaurantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getRestaurant, getMenu } = useFirestore();
-  const { cart, addToCart, cartSubtotal, cartTotalItems } = useCart();
+  const { cart, addToCart, removeFromCart, cartSubtotal, cartTotalItems } = useCart();
 
   const [restaurant, setRestaurant] = useState(null);
   const [menu, setMenu] = useState([]);
@@ -86,6 +86,10 @@ export default function RestaurantDetail() {
 
   const handleAdd = (item) => {
     addToCart(restaurant.id, item);
+  };
+
+  const handleRemove = (item) => {
+    removeFromCart(item.id);
   };
 
   const getCountInCart = (itemId) => {
@@ -179,6 +183,7 @@ export default function RestaurantDetail() {
                       key={item.id}
                       item={item}
                       onAdd={handleAdd}
+                      onRemove={handleRemove}
                       countInCart={getCountInCart(item.id)}
                     />
                   ))}

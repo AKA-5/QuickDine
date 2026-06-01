@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { getRestaurantRecommendations } from '../../services/gemini';
+import { getRestaurantRecommendations, chatWithAssistant } from '../../services/gemini';
 import { MOCK_RESTAURANTS } from '../../services/mockData';
 
 beforeEach(() => {
@@ -35,6 +35,31 @@ describe('Gemini Recommendation Service', () => {
     expect(recommendations.length).toBe(0);
     
     // Restore the key
+    import.meta.env.VITE_GEMINI_API_KEY = originalKey;
+  });
+});
+
+describe('Gemini Chat Assistant Service', () => {
+  it('should clean conversation history when starting with model role', async () => {
+    // Set mock key to trigger startChat pathway
+    const originalKey = import.meta.env.VITE_GEMINI_API_KEY;
+    import.meta.env.VITE_GEMINI_API_KEY = 'MOCK_KEY';
+
+    const history = [
+      { role: 'model', text: 'Welcome to QuickDine!' },
+      { role: 'user', text: 'Show me restaurants' }
+    ];
+
+    const response = await chatWithAssistant(
+      'Recommend something',
+      { cuisines: ['Pakistani'] },
+      MOCK_RESTAURANTS,
+      history
+    );
+
+    expect(response).toBe('I recommend visiting Savour Foods.');
+
+    // Restore key
     import.meta.env.VITE_GEMINI_API_KEY = originalKey;
   });
 });
